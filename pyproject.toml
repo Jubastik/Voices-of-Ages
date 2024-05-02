@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "voices-of-ages"
+version = "0.1.0"
+description = ""
+authors = ["Artem <artem00561@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiogram-dialog = "2.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

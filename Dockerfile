@@ -25,4 +25,4 @@ RUN poetry config virtualenvs.create false \
 COPY . /app
 
 # Команда для запуска вашего приложения
-CMD ["python", "main.py"]
+CMD ["python", "-m", "src"]

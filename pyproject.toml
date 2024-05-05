@@ -11,6 +11,7 @@ aiogram-dialog = "2.1.0"
 coloredlogs = "15.0.1"
 redis = "5.0.4"
 pydantic-settings = "2.2.1"
+watchdog = "^4.0.0"
 
 
 [build-system]

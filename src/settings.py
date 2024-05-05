@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     redis_url: RedisDsn
 
     class Config:
+        override = False
         env_file = ".env"
         env_prefix = "BOT_"
 

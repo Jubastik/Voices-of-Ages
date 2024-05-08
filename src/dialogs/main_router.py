@@ -4,8 +4,9 @@ from aiogram import Router
 from aiogram.dispatcher.event.bases import UNHANDLED
 from aiogram.filters import CommandStart
 from aiogram.types import Message
-from aiogram_dialog import DialogManager, StartMode
+from aiogram_dialog import DialogManager
 from aiogram_dialog.api.exceptions import UnknownIntent, UnknownState
+from httpx import ConnectError
 
 from src.dialogs.states import MenuSG
 
@@ -26,5 +27,7 @@ async def error_handler(event, dialog_manager: DialogManager):
         await handle_start_query(event.update.callback_query, dialog_manager)
     elif isinstance(event.exception, UnknownState):
         await handle_start_query(event.update.callback_query, dialog_manager)
+    elif isinstance(event.exception, ConnectError):
+        await event.update.callback_query.answer("ML сервис недоступен", show_alert=True)
     else:
         return UNHANDLED

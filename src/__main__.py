@@ -9,11 +9,12 @@ from aiogram.fsm.storage.redis import RedisStorage, DefaultKeyBuilder
 from aiogram_dialog import setup_dialogs
 from redis.asyncio import Redis
 
-from src.dialogs import register_dialogs
 from src.commands import setup_bot_commands, remove_bot_commands
+from src.dialogs import register_dialogs
 from src.dialogs.main_router import dlg_router, error_handler
 from src.settings import settings
-from urllib.parse import urlparse
+
+bot = Bot(token=settings.token.get_secret_value(), default=DefaultBotProperties(parse_mode="HTML"))
 
 
 async def on_startup(dispatcher: Dispatcher, bot: Bot):
@@ -54,7 +55,6 @@ async def main():
     )
 
     # Initializing the dispatcher
-    bot = Bot(token=settings.token.get_secret_value(), default=DefaultBotProperties(parse_mode="HTML"))
     dp = Dispatcher(storage=storage)
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)

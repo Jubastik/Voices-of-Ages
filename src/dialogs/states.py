@@ -8,6 +8,7 @@ class MenuSG(StatesGroup):
 class ProcessSG(StatesGroup):
     choice = State()
     send = State()
+    convert = State()
 
 
 class ArchiveSG(StatesGroup):

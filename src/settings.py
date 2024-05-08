@@ -1,4 +1,4 @@
-from pydantic import SecretStr, RedisDsn
+from pydantic import SecretStr, RedisDsn, AnyHttpUrl
 from pydantic_settings import BaseSettings
 
 
@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     admin_id: int
 
     redis_url: RedisDsn
+    gradio_url: str
 
     class Config:
         override = False

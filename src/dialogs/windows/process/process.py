@@ -36,7 +36,7 @@ SendProcessWin = Window(
 )
 
 ConvertProcessWin = Window(
-    Format("Ожидайте\nТекущий статус: {status}"),
+    Format("Ожидайте\n{status}"),
     Cancel(Const("Меню")),
     getter=getter_convert,
     state=ProcessSG.convert,

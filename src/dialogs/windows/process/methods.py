@@ -17,7 +17,10 @@ async def getter_choice(dialog_manager: DialogManager, **kwargs):
 
 
 async def getter_convert(dialog_manager: DialogManager, **kwargs):
-    return {"status": dialog_manager.dialog_data.get("status", "Начало")}
+    status = f"Текущий статус: {dialog_manager.dialog_data.get('status_code', 'Начало')}"
+    if dialog_manager.dialog_data.get("status_queue_size"):
+        status += f"\nМесто в очереди: {dialog_manager.dialog_data.get('status_queue_size')}"
+    return {"status": status}
 
 
 async def start_send_win(message: Message, dialog: DialogProtocol, manager: DialogManager, voice):
@@ -45,7 +48,8 @@ async def status_updater(job: Job, manager: BgManager):
 
     while job.status().success is None:
         await asyncio.sleep(1)
-        await manager.update({"status": str(job.status().code.name)})
+        await manager.update(
+            {"status_code": job.status().code.name, "status_queue_size": job.status().queue_size})
     if job.status().success:
         audio_path = job.result()[1]
         audio = FSInputFile(audio_path)

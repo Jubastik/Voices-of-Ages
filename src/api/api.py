@@ -17,11 +17,11 @@ async def start_convert(voice_name, audio_url) -> Job:
     data = [
         0,
         audio_url,
-        0,
+        -6,  # Высота
         None,
         "rmvpe",
         "",
-        "",
+        f"logs/added_IVF293_Flat_nprobe_1_{voice_name}_v2.index",
         0.75,
         3,
         0,

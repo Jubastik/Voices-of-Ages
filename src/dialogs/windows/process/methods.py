@@ -47,6 +47,9 @@ async def set_octave(message: CallbackQuery, radio: ManagedRadio, manager: Dialo
 async def handle_audio(message: Message, dialog: DialogProtocol, manager: DialogManager):
     if message.voice is None:
         return
+    if message.voice.duration > 60 * 4:
+        await message.answer("Максимальная длительность аудио 4 минуты")
+        return
 
     asyncio.create_task(
         start_ml(message, manager.dialog_data["voice_name"], int(manager.dialog_data.get("octave", 0)), manager.bg())

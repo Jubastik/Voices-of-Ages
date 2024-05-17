@@ -22,7 +22,7 @@ octaves = (
 
 async def getter_choice(dialog_manager: DialogManager, **kwargs):
     all_voices = []
-    for key, name in (await get_all_voices()).items():
+    for key, name in get_all_voices().items():
         all_voices.append([name, name])
     return {"voices": all_voices}
 
@@ -48,6 +48,7 @@ async def handle_audio(message: Message, dialog: DialogProtocol, manager: Dialog
     from src.__main__ import bot
     if message.voice is None:
         return
+    await manager.next()
 
     file_path = await bot.get_file(message.voice.file_id)
     # Загружаем файл
@@ -68,8 +69,6 @@ async def handle_audio(message: Message, dialog: DialogProtocol, manager: Dialog
 
     job = await start_convert(manager.dialog_data["voice_name"], local_url, int(manager.dialog_data.get("octave", 0)))
     asyncio.create_task(status_updater(job, manager.bg()))
-
-    await manager.next()
 
 
 async def status_updater(job: Job, manager: BgManager):

@@ -45,10 +45,17 @@ async def set_octave(message: CallbackQuery, radio: ManagedRadio, manager: Dialo
 
 
 async def handle_audio(message: Message, dialog: DialogProtocol, manager: DialogManager):
-    from src.__main__ import bot
     if message.voice is None:
         return
+
+    asyncio.create_task(
+        start_ml(message, manager.dialog_data["voice_name"], int(manager.dialog_data.get("octave", 0)), manager.bg())
+    )
     await manager.next()
+
+
+async def start_ml(message: Message, voice_name, octave, manager: BgManager):
+    from src.__main__ import bot
 
     file_path = await bot.get_file(message.voice.file_id)
     # Загружаем файл
@@ -67,8 +74,8 @@ async def handle_audio(message: Message, dialog: DialogProtocol, manager: Dialog
     local_url = await load_audio(f'inp_audio/{message.message_id}.mp3')
     os.remove(f'inp_audio/{message.message_id}.mp3')
 
-    job = await start_convert(manager.dialog_data["voice_name"], local_url, int(manager.dialog_data.get("octave", 0)))
-    asyncio.create_task(status_updater(job, manager.bg()))
+    job = await start_convert(voice_name, local_url, octave)
+    await status_updater(job, manager)
 
 
 async def status_updater(job: Job, manager: BgManager):

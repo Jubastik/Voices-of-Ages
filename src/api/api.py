@@ -12,7 +12,7 @@ async def load_audio(mp3path):
     return audio_path
 
 
-@ttl_cache(ttl=120)
+@ttl_cache(ttl=300)
 def get_all_voices():
     ml_client = Client(settings.gradio_url, upload_files=False, verbose=False)
 

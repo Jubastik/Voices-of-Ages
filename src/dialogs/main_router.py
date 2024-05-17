@@ -28,6 +28,6 @@ async def error_handler(event, dialog_manager: DialogManager):
     elif isinstance(event.exception, UnknownState):
         await handle_start_query(event.update.callback_query, dialog_manager)
     elif isinstance(event.exception, ConnectError):
-        await event.update.callback_query.answer("ML сервис недоступен", show_alert=True)
+        await event.update.callback_query.answer("ML сервис запускается. Повторите попытку через 30 секунд", show_alert=True)
     else:
         return UNHANDLED

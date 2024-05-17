@@ -1,12 +1,14 @@
+import operator
 from operator import itemgetter
 
 from aiogram_dialog import Window
 from aiogram_dialog.widgets.input import MessageInput
-from aiogram_dialog.widgets.kbd import Cancel, ScrollingGroup, Multiselect, Back
+from aiogram_dialog.widgets.kbd import Cancel, ScrollingGroup, Multiselect, Back, Radio
 from aiogram_dialog.widgets.text import Const, Format
 
 from src.dialogs.states import ProcessSG
-from src.dialogs.windows.process.methods import getter_choice, start_send_win, handle_audio, getter_convert
+from src.dialogs.windows.process.methods import getter_choice, start_send_win, handle_audio, getter_convert, octaves, \
+    set_octave
 
 ChoiceProcessWin = Window(
     Const("Выберите голос"),
@@ -29,7 +31,15 @@ ChoiceProcessWin = Window(
 )
 
 SendProcessWin = Window(
-    Const("Запишите голосовое сообщение:"),
+    Const("Запишите голосовое сообщение\nМожете изменить высоту голоса:"),
+    Radio(
+        Format("🔘 {item[0]}"),
+        Format("⚪️ {item[0]}"),
+        id="r_octaves",
+        item_id_getter=operator.itemgetter(1),
+        on_state_changed=set_octave,
+        items=octaves,
+    ),
     Back(Const("Назад")),
     MessageInput(handle_audio),
     state=ProcessSG.send,

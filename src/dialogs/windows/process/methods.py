@@ -1,12 +1,23 @@
 import asyncio
+import os
+from io import BytesIO
 
-from aiogram.types import Message, FSInputFile
+from aiogram.types import Message, FSInputFile, CallbackQuery
 from aiogram_dialog import DialogManager, DialogProtocol, ShowMode
 from aiogram_dialog.manager.bg_manager import BgManager
+from aiogram_dialog.widgets.kbd import ManagedRadio
 from gradio_client.client import Job
+from pydub import AudioSegment
 
-from src.api.api import get_all_voices, start_convert
-from src.settings import settings
+from src.api.api import get_all_voices, start_convert, load_audio
+
+octaves = (
+    ("⬇️", -12),
+    ("↘️", -6),
+    ("0️⃣", 0),
+    ("↗️", 6),
+    ("⬆️", 12),
+)
 
 
 async def getter_choice(dialog_manager: DialogManager, **kwargs):
@@ -29,15 +40,33 @@ async def start_send_win(message: Message, dialog: DialogProtocol, manager: Dial
     await manager.next()
 
 
+async def set_octave(message: CallbackQuery, radio: ManagedRadio, manager: DialogManager, octave: int):
+    manager.dialog_data["octave"] = octave
+
+
 async def handle_audio(message: Message, dialog: DialogProtocol, manager: DialogManager):
     from src.__main__ import bot
     if message.voice is None:
         return
-    file_id = message.voice.file_id
-    file = await bot.get_file(file_id)
-    file_path = file.file_path
-    download_url = f'https://api.telegram.org/file/bot{settings.token.get_secret_value()}/{file_path}'
-    job = await start_convert(manager.dialog_data["voice_name"], download_url)
+
+    file_path = await bot.get_file(message.voice.file_id)
+    # Загружаем файл
+    voice_file = await bot.download_file(file_path.file_path)
+
+    # Конвертируем OGG в MP3
+    audio = AudioSegment.from_ogg(voice_file)
+    mp3_bytes = BytesIO()
+    audio.export(mp3_bytes, format='mp3')
+    mp3_bytes.seek(0)  # Сбрасываем указатель в начало
+
+    # Сохраняем файл на диск
+    with open(f'inp_audio/{message.message_id}.mp3', 'wb') as f:
+        f.write(mp3_bytes.read())
+
+    local_url = await load_audio(f'inp_audio/{message.message_id}.mp3')
+    os.remove(f'inp_audio/{message.message_id}.mp3')
+
+    job = await start_convert(manager.dialog_data["voice_name"], local_url, int(manager.dialog_data.get("octave", 0)))
     asyncio.create_task(status_updater(job, manager.bg()))
 
     await manager.next()

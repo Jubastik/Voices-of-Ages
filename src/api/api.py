@@ -30,7 +30,7 @@ async def start_convert(voice_name, audio_url, octave) -> Job:
         ("высота", octave),
         ("f0_curve", None),
         ("алгоритм извлечения", "rmvpe"),
-        (".index ищется автоматически", f"./logs/added_IVF253_Flat_nprobe_1_{voice_name}_v2.index"),
+        (".index ищется автоматически", f"./logs/{voice_name}_v2.index"),
         ("соотношение_поисковых_функций", 0),
         ("если_3_применить_медианную_фильтрацию", 3),
         ("0_for_no_resampling", 0),

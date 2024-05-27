@@ -15,8 +15,6 @@ dlg_router = Router()
 
 @dlg_router.message(CommandStart())
 async def handle_start_query(message: Message, dialog_manager: DialogManager):
-    await message.answer("Привет")
-
     await dialog_manager.start(MenuSG.main)
 
 

@@ -8,7 +8,7 @@ from aiogram_dialog.widgets.text import Const, Format
 
 from src.dialogs.states import ProcessSG
 from src.dialogs.windows.process.methods import getter_choice, start_send_win, handle_audio, getter_convert, octaves, \
-    set_octave
+    set_octave, stop_updater
 
 ChoiceProcessWin = Window(
     Const("Выберите голос"),
@@ -33,8 +33,8 @@ ChoiceProcessWin = Window(
 SendProcessWin = Window(
     Const("Запишите голосовое сообщение\nМожете изменить высоту голоса:"),
     Radio(
-        Format("🔘 {item[0]}"),
-        Format("⚪️ {item[0]}"),
+        Format("> {item[0]}"),
+        Format("{item[0]}"),
         id="r_octaves",
         item_id_getter=operator.itemgetter(1),
         on_state_changed=set_octave,
@@ -47,7 +47,7 @@ SendProcessWin = Window(
 
 ConvertProcessWin = Window(
     Format("Ожидайте\n{status}"),
-    Cancel(Const("Меню")),
+    Back(Const("Отмена"), on_click=stop_updater),
     getter=getter_convert,
     state=ProcessSG.convert,
 )

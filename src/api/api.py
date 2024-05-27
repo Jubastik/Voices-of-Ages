@@ -1,29 +1,28 @@
+from asyncio import sleep
+
 from cachetools.func import ttl_cache
 from gradio_client import Client
 from gradio_client.client import Job
 
 from src.settings import settings
 
+ml_client_for_load = Client(settings.gradio_url)
+ml_client = Client(settings.gradio_url, upload_files=False, verbose=False, output_dir="./out_audio")
 
-async def load_audio(mp3path):
-    ml_client = Client(settings.gradio_url, verbose=False)
 
-    audio_path = ml_client.predict(mp3path, fn_index=1)
+async def load_audio(audio_path):
+    audio_path = ml_client_for_load.predict(audio_path, fn_index=1)
     return audio_path
 
 
-@ttl_cache(ttl=300)
+@ttl_cache(ttl=60 * 60 * 2)
 def get_all_voices():
-    ml_client = Client(settings.gradio_url, upload_files=False, verbose=False)
-
     gradio_query = ml_client.predict(fn_index=9)
     names = {ind: name.replace(".pth", "") for ind, name in enumerate(gradio_query[0]["choices"])}
     return names
 
 
 async def start_convert(voice_name, audio_url, octave) -> Job:
-    ml_client = Client(settings.gradio_url, upload_files=False, verbose=False, output_dir="./out_audio")
-
     predict_settings = (
         ("speaker_id", 0),
         ("аудиозапись", audio_url),
@@ -41,6 +40,7 @@ async def start_convert(voice_name, audio_url, octave) -> Job:
     data = [v for k, v in predict_settings]
 
     ml_client.predict(f"{voice_name}.pth", fn_index=0)
+    await sleep(1)
     job = ml_client.submit(*data, fn_index=16)
     return job
 

@@ -1,0 +1,44 @@
+{
+  "Eisenhower": {
+    "title": "Эйзенхауэр",
+    "pth": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Eisenhower/Eisenhower.pth",
+    "index": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Eisenhower/Eisenhower.index",
+    "tts": "ru-RU-DmitryNeural-Male"
+  },
+  "Gorbachev": {
+    "title": "Горбачев",
+    "pth": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Gorbachev/Gorbachev.pth",
+    "index": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Gorbachev/Gorbachev.index",
+    "tts": "ru-RU-DmitryNeural-Male"
+  },
+  "Khrushchev": {
+    "title": "Хрущев",
+    "pth": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Khrushchev/Khrushchev.pth",
+    "index": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Khrushchev/Khrushchev.index",
+    "tts": "ru-RU-DmitryNeural-Male"
+  },
+  "Lenin": {
+    "title": "Ленин",
+    "pth": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Lenin/Lenin.pth",
+    "index": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Lenin/Lenin.index",
+    "tts": "ru-RU-DmitryNeural-Male"
+  },
+  "Puchkov": {
+    "title": "Пучков",
+    "pth": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Puchkov/Puchkov.pth",
+    "index": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Puchkov/Puchkov.index",
+    "tts": "ru-RU-DmitryNeural-Male"
+  },
+  "Stalin-radio": {
+    "title": "Сталин радио версия",
+    "pth": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Stalin-radio/Stalin-radio.pth",
+    "index": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Stalin-radio/Stalin-radio.index",
+    "tts": "ru-RU-DmitryNeural-Male"
+  },
+  "Stalin": {
+    "title": "Сталин",
+    "pth": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Stalin/Stalin.pth",
+    "index": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Stalin/Stalin.index",
+    "tts": "ru-RU-DmitryNeural-Male"
+  }
+}

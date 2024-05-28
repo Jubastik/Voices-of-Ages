@@ -7,7 +7,7 @@ from aiogram_dialog.widgets.kbd import Cancel, ScrollingGroup, Multiselect, Back
 from aiogram_dialog.widgets.text import Const, Format
 
 from src.dialogs.states import ProcessSG
-from src.dialogs.windows.process.methods import getter_choice, start_send_win, handle_audio, getter_convert, octaves, \
+from src.dialogs.windows.process.methods import getter_choice, start_send_win, handle_audio_or_tts, getter_convert, octaves, \
     set_octave, stop_updater
 
 ChoiceProcessWin = Window(
@@ -31,7 +31,7 @@ ChoiceProcessWin = Window(
 )
 
 SendProcessWin = Window(
-    Const("Запишите голосовое сообщение\nМожете изменить высоту голоса:"),
+    Const("Запишите голосовое сообщение или отправьте текст\nМожете изменить высоту голоса:"),
     Radio(
         Format("> {item[0]}"),
         Format("{item[0]}"),
@@ -41,7 +41,7 @@ SendProcessWin = Window(
         items=octaves,
     ),
     Back(Const("Назад")),
-    MessageInput(handle_audio),
+    MessageInput(handle_audio_or_tts),
     state=ProcessSG.send,
 )
 

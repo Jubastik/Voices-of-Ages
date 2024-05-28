@@ -1,3 +1,5 @@
+import asyncio
+
 import gradio_client
 from gradio_client import Client
 from gradio_client.client import Job
@@ -16,6 +18,18 @@ async def start_convert(audio_url, model_url, index_url, octave) -> Job:
         0.25, 0.5, False,
         False
     ]
-    print(data)
     job = ml_client.submit(*data, api_name="/run")
     return job
+
+
+async def get_tts(text, voice):
+    audio_path = ml_client.submit(
+        tts_voice=voice,
+        tts_text=text,
+        play_tts=False,
+        api_name="/infer_tts_audio"
+    )
+    while audio_path.status().success is None:
+        await asyncio.sleep(2)
+
+    return audio_path.result()[0][0]

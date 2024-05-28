@@ -14,3 +14,7 @@ def get_model_url(model_id):
 
 def get_index_url(model_id):
     return models[model_id]["index"]
+
+
+def get_tts_voice(model_id):
+    return models[model_id]["tts"]

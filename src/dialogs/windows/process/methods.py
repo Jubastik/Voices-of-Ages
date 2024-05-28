@@ -7,8 +7,8 @@ from aiogram_dialog.manager.bg_manager import BgManager
 from aiogram_dialog.widgets.kbd import ManagedRadio
 from gradio_client.client import Job
 
-from src.api.api import start_convert
-from src.db.fake_database import get_all_voices, get_model_url, get_index_url
+from src.api.api import start_convert, get_tts
+from src.db.fake_database import get_all_voices, get_model_url, get_index_url, get_tts_voice
 from src.dialogs.states import ProcessSG
 
 octaves = (
@@ -44,12 +44,17 @@ async def set_octave(message: CallbackQuery, radio: ManagedRadio, manager: Dialo
     manager.dialog_data["octave"] = octave
 
 
-async def handle_audio(message: Message, dialog: DialogProtocol, manager: DialogManager):
+async def handle_audio_or_tts(message: Message, dialog: DialogProtocol, manager: DialogManager):
     manager.dialog_data["status_code"] = "Начало"
-    if message.voice is None:
-        return
-    if message.voice.duration > 60 * 4:
-        await message.answer("Максимальная длительность аудио 4 минуты")
+    if message.voice is not None:
+        if message.voice.duration > 60 * 4:
+            await message.answer("Максимальная длительность аудио 4 минуты")
+            return
+    elif message.text is not None:
+        if len(message.text) > 3000:
+            await message.answer("Максимальная длина текста 3000 символов")
+            return
+    else:
         return
 
     asyncio.create_task(
@@ -58,11 +63,23 @@ async def handle_audio(message: Message, dialog: DialogProtocol, manager: Dialog
     await manager.next()
 
 
-async def start_ml(message: Message, voice_id, octave, manager: BgManager):
-    from src.__main__ import bot
-
+async def start_ml(message: Message, voice_id: str, octave: int, manager: BgManager):
     if message.from_user.id in stop_users:
         stop_users.remove(message.from_user.id)
+
+    model_url = get_model_url(voice_id)
+    index_url = get_index_url(voice_id)
+    if message.voice is not None:
+        audio_url = await upload_audio(message, manager)
+    else:
+        audio_url = await upload_tts(message, voice_id, manager)
+
+    job = await start_convert(audio_url, model_url, index_url, octave)
+    await status_updater(voice_id, job, manager)
+
+
+async def upload_audio(message: Message, manager: DialogManager):
+    from src.__main__ import bot
 
     file_path = await bot.get_file(message.voice.file_id)
     # Загружаем файл
@@ -72,12 +89,12 @@ async def start_ml(message: Message, voice_id, octave, manager: BgManager):
     # Сохраняем файл на диск
     with open(audio_url, 'wb') as f:
         f.write(voice_file.read())
+    return audio_url
 
-    model_url = get_model_url(voice_id)
-    index_url = get_index_url(voice_id)
 
-    job = await start_convert(audio_url, model_url, index_url, octave)
-    await status_updater(voice_id, job, manager)
+async def upload_tts(message: Message, voice_id: str, manager: DialogManager):
+    audio_url = await get_tts(message.text, get_tts_voice(voice_id))
+    return audio_url
 
 
 async def stop_updater(message: Message, dialog: DialogProtocol, manager: DialogManager):

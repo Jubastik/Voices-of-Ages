@@ -40,5 +40,17 @@
     "pth": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Stalin/Stalin.pth",
     "index": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Stalin/Stalin.index",
     "tts": "ru-RU-DmitryNeural-Male"
+  },
+  "Yeltsin": {
+    "title": "Ельцин",
+    "pth": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Yeltsin/Yeltsin.pth",
+    "index": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Yeltsin/Yeltsin.index",
+    "tts": "ru-RU-DmitryNeural-Male"
+  },
+  "Charles-de-Gaulle": {
+    "title": "Шарль де Голль",
+    "pth": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Charles-de-Gaulle/Charles-de-Gaulle.pth",
+    "index": "https://huggingface.co/Jubastik/Historical_voices/resolve/main/Charles-de-Gaulle/Charles-de-Gaulle.index",
+    "tts": "ru-RU-DmitryNeural-Male"
   }
 }

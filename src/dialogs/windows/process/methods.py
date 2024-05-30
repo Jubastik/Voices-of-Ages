@@ -7,7 +7,7 @@ from aiogram_dialog.manager.bg_manager import BgManager
 from aiogram_dialog.widgets.kbd import ManagedRadio
 from gradio_client.client import Job
 
-from src.api.api import start_convert, get_tts
+from src.api.api import start_convert, get_tts, status_translations
 from src.db.fake_database import get_all_voices, get_model_url, get_index_url, get_tts_voice
 from src.dialogs.states import ProcessSG
 
@@ -45,7 +45,7 @@ async def set_octave(message: CallbackQuery, radio: ManagedRadio, manager: Dialo
 
 
 async def handle_audio_or_tts(message: Message, dialog: DialogProtocol, manager: DialogManager):
-    manager.dialog_data["status_code"] = "Начало"
+    manager.dialog_data["status_code"] = "НАЧАЛО"
     if message.voice is not None:
         if message.voice.duration > 60 * 4:
             await message.answer("Максимальная длительность аудио 4 минуты")
@@ -112,7 +112,7 @@ async def status_updater(voice_id: str, job: Job, manager: BgManager):
             logging.info("Job canceled")
             return
         await manager.update(
-            {"status_code": job.status().code.name, "status_queue_size": job.status().queue_size})
+            {"status_code": status_translations.get(job.status().code.name), "status_queue_size": job.status().queue_size})
 
     if job.status().success:
         audio_path = job.result()[0]

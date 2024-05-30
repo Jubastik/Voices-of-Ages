@@ -8,6 +8,19 @@ from src.settings import settings
 
 ml_client = Client(settings.gradio_url, output_dir="./out_audio")
 
+status_translations = {
+    "STARTING": "НАЧАЛО",
+    "JOINING_QUEUE": "ПОДКЛЮЧЕНИЕ К ОЧЕРЕДИ",
+    "QUEUE_FULL": "ОЧЕРЕДЬ ПОЛНА",
+    "IN_QUEUE": "В ОЧЕРЕДИ",
+    "SENDING_DATA": "ОТПРАВКА ДАННЫХ",
+    "PROCESSING": "ОБРАБОТКА",
+    "ITERATING": "ИТЕРАЦИЯ",
+    "PROGRESS": "ПРОГРЕСС",
+    "FINISHED": "ЗАВЕРШЕНО",
+    "CANCELLED": "ОТМЕНЕНО",
+    "LOG": "ОБРАБОТКА"
+}
 
 async def start_convert(audio_url, model_url, index_url, octave) -> Job:
     data = [

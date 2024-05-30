@@ -1,5 +1,7 @@
 # Voices-of-Ages
 
+![Demo GIF](https://github.com/Jubastik/Voices-of-Ages/blob/main/docs/Voices-of-Ages.gif)
+
 ### Рабочий бот в TG: [@Voices_of_Ages_bot](https://t.me/VoicesOfAges_bot)
 
 Спасибо Hugging Face) 

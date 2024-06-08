@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8005:8080"  # На хосте 8005, в докере 8080,
+      - "16895:8080"  # На хосте 16895, в докере 8080,
     depends_on:
       - redis
     environment:

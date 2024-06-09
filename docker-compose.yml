@@ -9,7 +9,7 @@ services:
     volumes:
       - ./out_audio:/app/out_audio
     ports:
-      - "8005:8080"  # На хосте 8005, в докере 8080,
+      - "16895:8080"  # На хосте 16895, в докере 8080,
     depends_on:
       - redis
     environment:
@@ -20,4 +20,4 @@ services:
     container_name: redis
     image: "redis:latest"
     ports:
-      - "6363:6379" # На хосте 6363, в докере 6379
+      - "45580:6379" # На хосте 45580, в докере 6379

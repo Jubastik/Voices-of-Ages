@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/app
+      - ./out_audio:/app/out_audio
     ports:
       - "8005:8080"  # На хосте 8005, в докере 8080,
     depends_on:

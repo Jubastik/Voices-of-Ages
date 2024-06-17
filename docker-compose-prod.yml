@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  app:
+    extends:
+      file: docker-compose.yml
+      service: app
+    environment:
+        - BOT_TOKEN=${BOT_TOKEN}
+        - BOT_ADMIN_ID=${BOT_ADMIN_ID}
+        - BOT_GRADIO_URL=${BOT_GRADIO_URL}

@@ -8,16 +8,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./out_audio:/app/out_audio
-    ports:
-      - "16895:8080"  # На хосте 16895, в докере 8080,
     depends_on:
       - redis
     environment:
       - BOT_REDIS_URL=redis://redis:6379/0
 
-
   redis:
     container_name: redis
     image: "redis:latest"
-    ports:
-      - "45580:6379" # На хосте 45580, в докере 6379

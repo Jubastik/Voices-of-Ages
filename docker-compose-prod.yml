@@ -9,3 +9,8 @@ services:
         - BOT_TOKEN=${BOT_TOKEN}
         - BOT_ADMIN_ID=${BOT_ADMIN_ID}
         - BOT_GRADIO_URL=${BOT_GRADIO_URL}
+
+  redis:
+    extends:
+      file: docker-compose.yml
+      service: redis

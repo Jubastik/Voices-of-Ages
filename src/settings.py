@@ -13,6 +13,7 @@ class Settings(BaseSettings):
         override = False
         env_file = ".env"
         env_prefix = "BOT_"
+        extra = "allow"
 
 
 settings = Settings()

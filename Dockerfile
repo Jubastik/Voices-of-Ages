@@ -1,4 +1,3 @@
-# Используем официальный образ Python 3.12 как базовый
 FROM python:3.12-slim
 
 # Устанавливаем переменные окружения для Python
@@ -22,10 +21,8 @@ COPY pyproject.toml poetry.lock* /app/
 
 # Устанавливаем зависимости проекта с помощью Poetry
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi
+    && poetry install --no-interaction --no-ansi --no-root
 
-# Копируем остальные файлы проекта
 COPY . /app
 
-# Команда для запуска вашего приложения
 CMD ["python", "-m", "src"]

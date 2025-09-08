@@ -2,9 +2,6 @@
 
 ![Demo GIF](https://github.com/Jubastik/Voices-of-Ages/blob/main/docs/Voices-of-Ages.gif)
 
-### Рабочий бот в TG: [@Voices_of_Ages_bot](https://t.me/VoicesOfAges_bot)
-
-Спасибо Hugging Face) 
 ## Описание проекта
 
 Voices-of-Ages - инструмент для погружения в историю через речь выдающихся исторических личностей. Бот использует RVC v2 с голосами исторических деятелей, таких как Эйзенхауэр, Горбачев, Ленин и другие. Способен обрабатывать ваши голосовые сообщения, так же есть функция TTS.
